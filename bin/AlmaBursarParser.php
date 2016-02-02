@@ -59,7 +59,6 @@ function stop($parser,$element_name) {
             $GLOBALS['SUM']                  = Null;
             break;
     }
-    //echo "<br>";
 }
 
 // Function to use when finding character data
@@ -105,26 +104,15 @@ function char($parser,$data) {
             die("Fix XML and rerun.. contact your administrator if this error is invalid.");
         }
         break;
-        
   }
-  
 }
 
 function writeoutput() {
   
   setlocale(LC_MONETARY, 'en_US');
   // Windows does not have this function.
-  //echo "SUM B='".$GLOBALS['SUM']."'\n";
-  //$SUM = get_numeric($GLOBALS['SUM']);
   $GLOBALS['SUM'] = get_numeric($GLOBALS['SUM']);
   $SUM = money_format('%.2n',$GLOBALS['SUM']);
-  //$SUM = substr($SUM,1);
-  //echo "SUM E='".$SUM."'\n";
-  //$SUM = $GLOBALS['SUM'];
-  //$patronLen = strlen($GLOBALS['PATRONNAME']);
-  //echo "patronLen=$patronLen <br />";
-  //$PatronName = $GLOBALS['PATRONNAME'];
-  
   $LASTTRANSACTIONDATE = str_pad($GLOBALS['LASTTRANSACTIONDATE'], 20, ' ');
   $PatronName   = str_pad($GLOBALS['PATRONNAME'], 50, ' ');
   $VALUE        = str_pad($GLOBALS['VALUE'], 9, ' ');
@@ -165,16 +153,10 @@ function writeoutput() {
         }
         break;
     }
-  
-
-
-    //echo "PatronName='-$PatronName-' <br />";
-  //$PatronName = str_pad($PatronName, 60-strlen($GLOBALS['PATRONNAME']));
-  $output = $VALUE . /* $GLOBALS['INSTITUTIONID'] . */ $PatronName . $FINEFEETYPE . $LASTTRANSACTIONDATE . $feeType . $SUM
-          /* . $GLOBALS['LIBRARYID . ", " '] */ . $GLOBALS['ITEMTITLE'] . ", " . $GLOBALS['ITEMCALLNUMBER'] . ", "
-          . $GLOBALS['ITEMBARCODE'] . ", " . $GLOBALS['ITEMDUEDATE'] . ", " . $GLOBALS['ITEMLIBRARY'] . ", "
-          . $GLOBALS['ITEMLOCATION'] . "\r\n";
-  //echo "output='$output'<br />";
+      $output = $VALUE . /* $GLOBALS['INSTITUTIONID'] . */ $PatronName . $FINEFEETYPE . $LASTTRANSACTIONDATE . $feeType . $SUM
+                . $GLOBALS['ITEMTITLE'] . ", " . $GLOBALS['ITEMCALLNUMBER'] . ", "
+                . $GLOBALS['ITEMBARCODE'] . ", " . $GLOBALS['ITEMDUEDATE'] . ", " . $GLOBALS['ITEMLIBRARY'] . ", "
+                . $GLOBALS['ITEMLOCATION'] . "\r\n";
   fwrite($GLOBALS['f'], $output); 
   $output = Null;
   

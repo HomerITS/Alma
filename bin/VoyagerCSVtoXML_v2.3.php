@@ -102,9 +102,6 @@ if ($processFile) {
   
   // Get the headers of the file
   $headers = fgetcsv($inputFile);
-  //echo "headers=";
-  //print_r($headers);
-  //echo "<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />";
   
   // Create a new dom document with pretty formatting
   $xmlDoc = new DomDocument('1.0', 'UTF-8');
@@ -167,10 +164,8 @@ if ($processFile) {
             // echo "An unknown field [ $header ] has been detected.";
             //exitRoutine("An unknown field [ $header ] has been detected.  Please check input file validity and try again!",$output, 'error');
         } // catch
+      
       // create xml output
-      
-      //echo "<br />header=$header<br/>";
-      
       if ($header=='user_group')              { $user_group = $row[$i]; }  
       if ($header=='patron_barcode_1')        { $patron_barcode_1 = $row[$i]; }
       if ($header=='status')                  { $status = $row[$i]; }
@@ -676,10 +671,8 @@ if ($processFile) {
    } // while (($row = fgetcsv($inputFile)) !== FALSE) {
 
     $xmlString  = $xmlDoc->savexml();
-    //$fileName .= date('Ymd-gis') . ".xml";
     $fileName .= "." . date('m_d_y') . ".xml";
     echo "fileName=$fileName<br />";
-    //echo 'target path =' . $target_path;
     try {	  	
         if (!fopen($fileName, "w")) {
             throw new Exception("Cannot Create, or Append to, specified file.  Contact programming support!");
@@ -691,19 +684,13 @@ if ($processFile) {
   	exitRoutine($e->getMessage(),$output,'error');
     //echo 'Message: ' .$e->getMessage();
   } // catch
-  
-  //$xmlHandle = fopen($fileName, "w");
-
   $fwrite = TRUE;
-	//fwrite($xmlHandle, $xmlString);
-	
   try   {	  	
 	  setOutputFile($xmlHandle, $xmlString);
 	   //$output = exitRoutine("File has been converted successfully and output has been placed on c: drive.",$output,'');
 	 } // try
     catch(Exception $e) {
   	exitRoutine($e->getMessage(),$output,'error');
-    //echo 'Message: ' .$e->getMessage();
   } // catch
 	  
   fclose($xmlHandle);
@@ -741,8 +728,6 @@ function validate($data, $type) {
       $cdata = str_replace('.','-',$data);
       $data  = date('Y-m-d', strtotime($cdata));
   }
-      
-  // echo "return data=$data<br />";
   return $data;
 } // function validate() {
 
@@ -762,10 +747,9 @@ function exitRoutine($message,$output,$type='normal') {
   
   
   if ($type == "error") {
-
     echo 'Error Detected; Program is stopping';
     die();
   }
-} // 
+}
 
 ?>
